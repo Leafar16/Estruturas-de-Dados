@@ -1,5 +1,3 @@
-import java.util.List;
-//esta implementacao nao tem em vista o principio do encapsulamneto
 public class SinglyLinkedList {
     private ListNode head; //inicio da lista ligada
 
@@ -15,13 +13,15 @@ public class SinglyLinkedList {
 
     public void printList(){
         ListNode current=head;
+        System.out.println("\n");
         while(current!=null){
-            System.out.println(current.data);
+            System.out.print(current.data + "-->");
             current=current.next;
         }
+        System.out.println("null\n");
     }
 
-    public int lenthList(){
+    public int lengthList(){
         ListNode current=head;
         int length=0;
         while (current!=null) {
@@ -32,6 +32,7 @@ public class SinglyLinkedList {
     }
 
     public void insertNode(int data){ //insere nodo no fim da lista ligada
+        if(head==null) insertNodeBeginning(data);
         ListNode current=head;
         ListNode novo=new ListNode(data);
         while(current.next!=null){
@@ -64,6 +65,7 @@ public class SinglyLinkedList {
     }
 
     public void deleteFirst(){
+        if(head==null) return;
         ListNode current=head;
         head=head.next;
         current.next=null;
@@ -77,22 +79,73 @@ public class SinglyLinkedList {
         current.next=null;
     }
 
+    public void deleteAtPosition(int  pos){
+        if(head==null) return;
+        if (pos==0){
+            deleteFirst();
+        }else{
+            ListNode previous=head;
+            while (pos!=1){
+             previous=previous.next;
+             pos--;
+             if(previous==null) return;
+            }
+            ListNode next=previous.next;
+            previous.next=next.next;
+            next=null;
+        }
+    }
+
+    public void deleteByKey(int key){
+        if(head==null) return;
+        ListNode previous=head;
+
+        while(previous.next.data!=key){
+            previous=previous.next;
+            if(previous.next==null) return;
+        }
+        ListNode next=previous.next;
+        previous.next=next.next;
+        next=null;
+    }
+
+    public boolean elementExists(int data){
+        if(head==null) return false;
+        ListNode current=head;
+        while(current.data!=data ){
+            current=current.next;
+            if(current==null) return false;
+        }
+        return true;
+    }
+
+    public void reverseList() {
+        if (head == null || head.next == null) return; // If the list is empty or has only one element
+    
+        ListNode previous = null;
+        ListNode current = head;
+        ListNode next = null;
+    
+        while (current != null) {
+            next = current.next; // Store the next node
+            current.next = previous; // Reverse the link
+            previous = current; // Move previous to current
+            current = next; // Move current to next
+        }
+    
+        head = previous; // Update head to the new first node
+    }
+
+    
     public static void main(String[] args) {
         SinglyLinkedList sll=new SinglyLinkedList();
-        sll.head=new ListNode(10);
-        ListNode second=new ListNode(8);
-        ListNode third=new ListNode(34);
-        ListNode fourth=new ListNode(2);
+        sll.insertNodeBeginning(10);
+        sll.insertNode(8);
+        sll.insertNode(34);
+        sll.insertNode(2);
 
-        //Conectar os nodos para formar a lista
-        sll.head.next=second; //10 --> 8
-        second.next=third;  //10 --> 8 --> 34
-        third.next=fourth; //10 --> 8 --> 34 --> 2 --> null
-        
-        sll.insertNode(450);
-        sll.insertNodeBeginning(200);
-        sll.insertAtPosition(90,3);
-        sll.deleteLast();
+        sll.reverseList();
         sll.printList();
     }
 }
+
