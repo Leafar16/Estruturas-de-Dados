@@ -1,4 +1,3 @@
-package Grafos;
 
 public class GrafoMatriz {
     int [][] adjMatrix;// matriz que vai representar o grafo
