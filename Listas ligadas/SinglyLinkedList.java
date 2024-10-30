@@ -136,6 +136,22 @@ public class SinglyLinkedList {
         head = previous; // Update head to the new first node
     }
 
+    public ListNode findMiddleNode(){
+        if(head==null) return null;
+
+        if(lengthList()%2==0){
+            System.err.println("A lista tem nr par de elementos.");
+             return null;
+            }
+
+        ListNode current=head;
+            int c=(lengthList()/2);
+        for(int i=0;i<c;i++){
+            current=current.next;
+        }
+        return current;
+
+    }
     
     public static void main(String[] args) {
         SinglyLinkedList sll=new SinglyLinkedList();
@@ -143,8 +159,10 @@ public class SinglyLinkedList {
         sll.insertNode(8);
         sll.insertNode(34);
         sll.insertNode(2);
+        sll.insertNode(50);
+        sll.insertNode(60);
 
-        sll.reverseList();
+
         sll.printList();
     }
 }
